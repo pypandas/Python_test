@@ -27,4 +27,7 @@ if __name__ == "__main__":
     parser.setContentHandler(Handler)
 
     # 读取xml文件
-    parser.parse("../res/roomconfig_hot.xml")
+    try:
+        parser.parse("../res/roomconfig_hot.xml")
+    except ValueError as val:
+        print(val)
