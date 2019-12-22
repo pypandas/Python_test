@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ROOT>
+  <uitypeid id="209"/>
+  <language chinese="1" english = "0" fanti="0"/>
+  <logintype account="1" guest="1" weixin="1" qq="0" regist="1" registbyphone="1"/>
+  <exchangetype alipay="1" bank="1"/>
+  <IsOpenSpeed value="1"/>
+  <platform>
+    <item>
+      <chinesename>邮箱</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Mail</functionname>
+    </item>
+    <item>
+      <chinesename>设置</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Set</functionname>
+    </item>
+    <item>
+      <chinesename>个人信息</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_UserInfo</functionname>
+    </item>
+    <item>
+      <chinesename>充值</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_CZ</functionname>
+    </item>
+    <item>
+      <chinesename>分享</chinesename>
+      <isshow>0</isshow>
+      <functionname>Button_Share</functionname>
+    </item>
+    <item>
+      <chinesename>转盘</chinesename>
+      <isshow>0</isshow>
+      <functionname>Button_CJ</functionname>
+    </item>
+    <item>
+      <chinesename>银行</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Bank</functionname>
+    </item>
+    <item>
+      <chinesename>排行榜</chinesename>
+      <isshow>0</isshow>
+      <functionname>Button_Rank</functionname>
+    </item>
+    <item>
+      <chinesename>客服</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Service</functionname>
+    </item>
+    <item>
+      <chinesename>推广</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_TuiGuang</functionname>
+    </item>
+    <item>
+      <chinesename>礼物</chinesename>
+      <isshow>0</isshow>
+      <functionname>Button_Give</functionname>
+    </item>
+    <item>
+      <chinesename>兑换</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Exchange</functionname>
+    </item>
+    <item>
+      <chinesename>首页轮播</chinesename>
+      <isshow>1</isshow>
+      <functionname>BlanneView</functionname>
+    </item>
+    <item>
+      <chinesename>洗码</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_Wash</functionname>
+    </item>
+    <item>
+      <chinesename>活动中心</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_ActiveCenter</functionname>
+    </item>
+    <item>
+      <chinesename>注册送金</chinesename>
+      <isshow>1</isshow>
+      <functionname>Button_RegisterPayment</functionname>
+    </item>
+    <item>
+    <chinesename>登录公告</chinesename>
+    <isshow>0</isshow>
+    <functionname>Button_LoginNotices</functionname>
+    </item>
+  </platform>
+  
+  <VIP>
+    <VIP LevelLimitGive="4" GiveViewTip="温馨提示：VIP8以下只能赠送黄金弹头，VIP8以上能赠送任意弹头"
+          Desc1="1.专享VIP1尊贵头像标签{0}2.允许赠送黄金弹头"
+          Desc2="1.专享VIP2尊贵头像标签{0}2.允许赠送黄金弹头"
+          Desc3="1.专享VIP3尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc4="1.专享VIP4尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc5="1.专享VIP5尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc6="1.专享VIP6尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc7="1.专享VIP7尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc8="1.专享VIP8尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc9="1.专享VIP9尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc10="1.专享VIP10尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc11="1.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc12="12.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc13="13.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc14="14.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc15="15.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc16="16.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc17="17.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc18="18.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc19="19.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+          Desc20="20.专享VIP11尊贵头像标签{0}2.允许赠送任意弹头"
+   />
+  </VIP>
+  
+  <Give>
+    <Give    
+      item1="100000"
+      item2="1000000"
+      item3="10000000"
+      item4="100000000"
+      />
+  </Give>
+  
+  <!--提现比例-->
+   <CashWithdrawal>
+     <CashWithdrawal Ratio="10" />
+   </CashWithdrawal>
+  
+  <!--返利百分比-->
+  <Rebate value="3"/>
+
+  <!--充值配置-->
+  <Recharge>
+    <!--1.支付宝 2.微信 3.点卡 4.vip充值 5.云闪付 11.支付宝扫码 21.微信扫码 53.银行行转载-->
+    <Recharge recommend="100,53,4,54,1,2,11,21,5"/>
+    <AliPay Rebate="0"/>
+    <WechatPay Rebate="0"/>
+    <PointCard Rebate="0"/>
+    <AgentPay Rebate="3"/>
+    <CloudFlash Rebate="0"/>
+    <AlipayQR Rebate="0"/>
+    <WechatQR Rebate="0"/>
+    <BankTransfer Rebate="3"/>
+    <OnePayment Rebate="0"/>
+  </Recharge>
+  
+  <Notify disPlayCount="1" />
+  <DianKa IsNeedPassword="1" />
+  <RegisteredPayment IsNeed="1" />
+  <MinimumExchangeAmount amount="100"/>
+  <NoticeMsg NoticeMsg="捕鱼更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了更新了" />
+  <RevenueAlert item="结算金额至少100金币（结算收取1.5%的手续费，最低1.5元）"/>
+  <WithdrawalLevel level="10" />
+  <GiftCanInputLevel level="4"/>
+</ROOT>

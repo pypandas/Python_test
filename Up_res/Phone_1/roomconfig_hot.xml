@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ROOT>
+  <GoldGame>
+    <!--status（type，game）：0：小图标无状态，1：小图标热状态，2：小图标新状态，10：长条无，11：长条热，12：长条新（10，11，12游戏图标才有用）-->
+    <!--showCaijin（game）：游戏内是否显示彩金    1：显示，0：不显示    如果无此字段，默认是显示-->
+    <!--roomindex：申请彩金的房间索引-->
+    <!--screenOrientatione：游戏屏幕方向类型  1:竖屏 2:可上下旋转竖屏 3：横屏 4：可左右旋转横屏-->
+    <!--gametype：游戏类型  1:连线机 2:棋牌 3：百人游戏 4：捕鱼-->
+    <!--open：开放与否-->
+    <!--New-->
+	<gameitem id="10003300" serverid="231" name="斗地主" version ="1" gametype="2" showcaijin="0" status="3" roomindex="1" screenOrientatione="3" open="1"/>
+    <gameitem id="40000303" serverid="303" name="捕鱼大战" version ="1" gametype="1" showcaijin="0" status="3" roomindex="4" screenOrientatione="3" open="1"/>
+
+    <gameitem id="10903236" serverid="236" name="抢庄牛牛" version ="1" gametype="2" showcaijin="0" status="1" roomindex="3" screenOrientatione="3" open="1"/>
+    <gameitem id="10302287" serverid="287" name="水浒传" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+
+    <gameitem id="10303294" serverid="294" name="龙虎斗" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="40000119" serverid="119" name="金蟾捕鱼" version ="1" gametype="4" showcaijin="0" status="0" roomindex="2" screenOrientatione="3" open="1"/>
+
+	<gameitem id="10300177" serverid="177" name="极速金花" version ="1" gametype="2" showcaijin="0" status="1" roomindex="3" screenOrientatione="3" open="1"/>
+    <gameitem id="10302261" serverid="261" name="五龙争霸" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+
+    <gameitem id="10902223" serverid="223" name="通比牛牛" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+    <gameitem id="42000106" serverid="102" name="神龙宝藏" version ="1" gametype="4" showcaijin="0" status="0" roomindex="2" screenOrientatione="3" open="1"/>
+
+    <gameitem id="10302295" serverid="295" name="红黑大战" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+    <gameitem id="10302299" serverid="299" name="水果玛丽" version ="1" gametype="1" showcaijin="0" status="1" roomindex="1" screenOrientatione="3" open="1"/>
+
+	<gameitem id="10300232" serverid="232" name="红包游戏" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+    <gameitem id="40000108" serverid="101" name="摇钱树" version ="1" gametype="4" showcaijin="0" status="0" roomindex="2" screenOrientatione="3" open="1"/>
+    
+    <gameitem id="10300298" serverid="298" name="百人牛牛" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+    <gameitem id="10302245" serverid="245" name="缤纷果园" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+
+	<gameitem id="10300183" serverid="183" name="百家乐" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>	
+    <gameitem id="10302283" serverid="283" name="水果机" version ="1" gametype="3" showcaijin="0" status="0" roomindex="1" screenOrientatione="1" open="1"/>	
+
+    <gameitem id="11900266" serverid="266" name="21点" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10300263" serverid="263" name="翻牌机" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	
+    <gameitem id="10302289" serverid="289" name="发发发" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10302248" serverid="248" name="冰球突破" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+
+	<gameitem id="10302262" serverid="262" name="多财多福" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10302254" serverid="254" name="金鲨银鲨" version ="1" gametype="3" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10303218" serverid="218" name="奔驰宝马" version ="1" gametype="3" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10302234" serverid="234" name="炸金花" version ="1" gametype="2" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+	<gameitem id="10302296" serverid="296" name="水果拉霸" version ="1" gametype="1" showcaijin="0" status="0" roomindex="1" screenOrientatione="3" open="1"/>
+
+	
+
+
+    
+
+  </GoldGame> 
+</ROOT>

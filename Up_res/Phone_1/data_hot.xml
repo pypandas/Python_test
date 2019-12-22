@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ROOT>
+ 
+  <service url="http://app.csjiangjun.com/superadmin/index.php/"/>
+  <ipadress ip="app.csjiangjun.com" port="1801"/>
+  <chatipadress ip="app.csjiangjun.com" port="2100"/>
+  <broadcastaddress ip="bc.x8gjl.com" port="2801"/>
+  <headurl url="http://app.csjiangjun.com/kfimage/Uploads/"/>
+  <erweimaurl url="http://app.csjiangjun.com/kfimage/Hall_ErWeiMa.png"/>
+  <headuploadurl url="http://app.csjiangjun.com/kfimage/upload.php"/>
+  <BannerURL url="https://115qp.com"/>
+  <ActiveCenterURL url="http://app.csjiangjun.com/superadmin/index.php/"/>
+  <gameratio ratio="1:1"/>
+  <platformid id="10000"/>
+  <platformname name="115棋牌"/>
+  <platformtype name="1"/>
+  <GCloudVoiceInfo id="1966871320" secret ="32ef82df54a854add5d4b77eecc1ed6c"/>
+  <UITypes Type="KFGold_" isopen="1"/>
+  <PayConfig IsAppPay="0" IsH5Pay="1" IsApplePay="0"/>
+  <GameRecordURL url ="http://app.csjiangjun.com/record/"/>
+  <wechatappid value="wxaec53c7ebb01861b"/>
+  <wechatappsecret value="790683932dd259a490a87cf2586a7fc0"/>
+  <isForceFlash item="0"/>" <!--是否强制进入小游戏-->
+  <isForceNormal item="1"/>" <!--是否强制进入正常游戏-->
+  <!--1:无论哪个ip都只能进小游戏，2：无论哪个ip都只能进正常游戏，3：根据ip进入小游戏或者正常游戏-->
+  <ServiceCode item ="F015_20161128"/>
+</ROOT>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ROOT>
+  
+  <isForceFlash>0</isForceFlash> 
+  <isForceNormal>1</isForceNormal> 
+  <IsChannelPackage>0</IsChannelPackage>  
+  <ChannelGameID>40000126</ChannelGameID>  
+  <LobbyResVersion>197</LobbyResVersion> 
+  <LobbyLuaVersion>197</LobbyLuaVersion> 
+  <LobbyPhoneZipVersion>205</LobbyPhoneZipVersion> 
+  <IsDebugModel>1</IsDebugModel> 
+  <LobbyResMD5>6ff40c9fe5cc601d52e261b43fa66ee8</LobbyResMD5> 
+  <LobbyLuaMD5>2ca49b75d8304d0d6cab161a519f3290</LobbyLuaMD5> 
+  <LobbyPhoneZipMD5>288af7211e7cffb3873490e7977678a2</LobbyPhoneZipMD5> 
+</ROOT>
