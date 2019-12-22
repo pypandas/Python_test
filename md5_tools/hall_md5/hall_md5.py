@@ -13,13 +13,13 @@ def xmlchangemd5(md5str, xmlpath):
     luavesion = int(temp.find('LobbyLuaVersion').text)
     resvesion = int(temp.find('LobbyResVersion').text)
     phonevesion = int(temp.find('LobbyPhoneZipVersion').text)
-    if (alter(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str)):
+    if alter(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str):
         alter(xmlpath, '<LobbyPhoneZipVersion>' + str(phonevesion),
               '<LobbyPhoneZipVersion>' + str(phonevesion + 1))
-    if (alter(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5)):
+    if alter(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5):
         alter(xmlpath, '<LobbyLuaVersion>' + str(luavesion),
               '<LobbyLuaVersion>' + str(luavesion + 1))
-    if (alter(xmlpath, str(temp.find('LobbyResMD5').text), resmd5)):
+    if alter(xmlpath, str(temp.find('LobbyResMD5').text), resmd5):
         alter(xmlpath, '<LobbyResVersion>' + str(resvesion),
               '<LobbyResVersion>' + str(resvesion + 1))
 
