@@ -27,72 +27,66 @@ def md5(file_md5):
 
 
 def parse_xml(xml_file):
-    version_dict = {'lua': {}, 'res': {}}
+    version_dict = {}
     tree = ET.ElementTree()
     tree.parse(str(xml_file))
     temp = tree.getroot()
     lua_version = int(temp.find('LobbyLuaVersion').text)
     res_version = int(temp.find('LobbyResVersion').text)
-    lua_md5 = temp.find('LobbyLuaMD5').text
-    res_md5 = temp.find('LobbyResMD5').text
+    try:
+        lua_md5 = temp.find('LobbyLuaMD5').text
+    except AttributeError:
+        lua_md5 = 'add'
+    try:
+        res_md5 = temp.find('LobbyResMD5').text
+    except AttributeError:
+        res_md5 = 'add'
     for file_md5 in find_zip_file():
         if file_md5 == 'lua.zip':
             if lua_md5 != md5(file_md5):
-                version_dict['lua']['old_LobbyLuaMD5'] = lua_md5
-                version_dict['lua']['LobbyLuaMD5'] = md5(file_md5)
-                version_dict['lua']['old_LobbyLuaVersion'] = lua_version
+                version_dict['LobbyLuaMD5'] = md5(file_md5)
                 if lua_version != 0:
-                    version_dict['lua']['LobbyLuaVersion'] = lua_version + 1
+                    version_dict['LobbyLuaVersion'] = lua_version + 1
                 else:
-                    version_dict['lua']['LobbyLuaVersion'] = lua_version
+                    version_dict['LobbyLuaVersion'] = lua_version
             else:
-                continue
+                version_dict['LobbyLuaMD5'] = lua_md5
+                version_dict['LobbyLuaVersion'] = lua_version
         elif file_md5 == 'resources.zip':
             if res_md5 != md5(file_md5):
-                version_dict['res']['old_LobbyResMD5'] = res_md5
-                version_dict['res']['LobbyResMD5'] = md5(file_md5)
-                version_dict['res']['old_LobbyResVersion'] = res_version
-                version_dict['res']['LobbyResVersion'] = res_version + 1
+                version_dict['LobbyResMD5'] = md5(file_md5)
+                version_dict['LobbyResVersion'] = res_version + 1
             else:
-                continue
+                version_dict['LobbyResMD5'] = res_md5
+                version_dict['LobbyResVersion'] = res_version
         else:
             continue
     return version_dict
 
 
 def write_version(ver_dict, file):
-    version_file_read = open(file, 'rb')
-    dumps = version_file_read.read().decode('utf-8')
-
-    if ver_dict['res'] is not None:
-        old_res_md5 = ver_dict['res']['old_LobbyResMD5']
-        res_md5 = ver_dict['res']['LobbyResMD5']
-        old_res_ver = ver_dict['res']['old_LobbyResVersion']
-        res_ver = ver_dict['res']['LobbyResVersion']
-        sed_res_md5 = dumps.replace(old_res_md5, res_md5)
-        sed_res_ver = dumps.replace('<LobbyResVersion>' + str(old_res_ver), '<LobbyResVersion>' + str(res_ver))
-        version_file_write = open(file, 'wb')
-        version_file_write.write(sed_res_md5.encode('utf-8'))
-        version_file_write.write(sed_res_ver.encode('utf-8'))
-        version_file_write.close()
-    elif ver_dict['lua'] is not None:
-        old_lua_md5 = ver_dict['lua']['old_LobbyLuaMD5']
-        lua_md5 = ver_dict['lua']['LobbyLuaMD5']
-        old_lua_ver = ver_dict['lua']['old_LobbyLuaVersion']
-        lua_ver = ver_dict['lua']['LobbyLuaVersion']
-        sed_lua_md5 = dumps.replace(old_lua_md5, lua_md5)
-        sed_lua_ver = dumps.replace('<LobbyLuaVersion>' + str(old_lua_ver), '<LobbyLuaVersion>' + str(lua_ver))
-        version_file_write = open(file, 'wb')
-        version_file_write.write(sed_lua_md5.encode('utf-8'))
-        version_file_write.write(sed_lua_ver.encode('utf-8'))
-        version_file_write.close()
-    else:
-        return
+    ver_file_write = open(file, 'wb')
+    ver_file_write.write(b'<?xml version="1.0"?>\r\n')
+    ver_file_write.write(b'<ROOT>\r\n')
+    ver_file_write.write(
+        ('  <LobbyResVersion>' + str(ver_dict['LobbyResVersion']) + '</LobbyResVersion>\r\n').encode('utf-8'))
+    ver_file_write.write(
+        ('  <LobbyLuaVersion>' + str(ver_dict['LobbyLuaVersion']) + '</LobbyLuaVersion>\r\n').encode('utf-8'))
+    ver_file_write.write(
+        ('  <LobbyResMD5>' + str(ver_dict['LobbyResMD5']) + '</LobbyResMD5>\r\n').encode('utf-8')
+    )
+    ver_file_write.write(
+        ('  <LobbyLuaMD5>' + str(ver_dict['LobbyLuaMD5']) + '</LobbyLuaMD5>\r\n').encode('utf-8')
+    )
+    ver_file_write.write(b'</ROOT>')
+    ver_file_write.close()
 
 
 if __name__ == '__main__':
-    ver_xml = 'version.xml'
-    response = parse_xml(ver_xml)
-    print(response)
-    write_version(response, ver_xml)
 
+    # 获取version.xml
+    for _dir, _root, _file in os.walk('.\\'):
+        ver_xml = os.path.join(_dir, [f for f in _file if f == 'version.xml'][0])
+        response = parse_xml(ver_xml)
+        print(response)
+        write_version(response, ver_xml)
