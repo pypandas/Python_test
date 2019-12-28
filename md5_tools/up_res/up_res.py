@@ -76,21 +76,50 @@ def zip_unzip():
                                 else:
                                     os.remove(os.path.join(file1, file2))
 
+                    # 将lua和resources文件夹移动到上级目录
+                    try:
+                        shutil.move(os.path.join(file1, 'lua'), './')
+                    except:
+                        print('无lua文件夹')
+                    shutil.move(os.path.join(file1, 'resources'), './')
+
                     # 压缩lua文件夹
-                    if os.path.exists(os.path.join(file1, 'lua')):
-                        shutil.make_archive('lua', 'zip', root_dir=os.path.join(file1, 'lua'))
+                    if os.path.exists('lua'):
+                        zipFile_lua = zipfile.ZipFile('./lua.zip', 'w')
+                        zip_file_list_lua = []
+                        get_zip_file('lua', zip_file_list_lua)
+                        for file_lua in zip_file_list_lua:
+                            zipFile_lua.write(file_lua)
+                        zipFile_lua.close()
                     else:
                         print(os.path.join(file1), '非lua游戏')
 
                     # 压缩resources文件夹
-                    shutil.make_archive('resources', 'zip', root_dir=os.path.join(file1, 'resources'))
+                    zipFile_res = zipfile.ZipFile('./resources.zip', 'w')
+                    zip_file_list_res = []
+                    get_zip_file('resources', zip_file_list_res)
+                    for file_res in zip_file_list_res:
+                        zipFile_res.write(file_res)
+                    zipFile_res.close()
 
                     # 删除lua和resources文件夹
                     shutil.rmtree(os.path.join(file1))
+                    shutil.rmtree('resources')
+                    shutil.rmtree('lua')
                     print(os.path.join(file1), '资源更新完成')
 
         else:
             continue
+
+
+def get_zip_file(input_path, result):
+    # 遍历要压缩的目录
+    files = os.listdir(input_path)
+    for file in files:
+        if os.path.isdir(input_path + '/' + file):
+            get_zip_file(input_path + '/' + file, result)
+        else:
+            result.append(input_path + '/' + file)
 
 
 def read_xml(xml_path):
