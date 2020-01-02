@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<ROOT>
-  <LobbyResVersion>136</LobbyResVersion> <!--大厅资源版本号-->
-  <LobbyLuaVersion>135</LobbyLuaVersion> <!--大厅Lua脚本版本号-->
-  <LobbyResMD5>cd2bba45c884dc2f079869be0c654d4d</LobbyResMD5> <!--大厅资源版本号-->
-  <LobbyLuaMD5>ceede3d9823a504b7448b50ee8ae70ea</LobbyLuaMD5> <!--大厅Lua脚本版本号-->
-</ROOT>
