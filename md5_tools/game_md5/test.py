@@ -1,5 +1,6 @@
 import zipfile
 import os
+import shutil
 
 
 def get_zip_file(zip_file_name):
@@ -11,5 +12,3 @@ def get_zip_file(zip_file_name):
             zFile.write(os.path.join(root, i))
     zFile.close()
 
-
-get_zip_file('10300177')

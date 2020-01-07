@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import shutil
 import zipfile
@@ -15,7 +16,8 @@ def res_file_path(res_path, up_path):
     and_res_zip = os.listdir(res_path)
     if len(and_res_zip) == 0:
         logging.debug('%s|%s resources not update!' % (LOG_TIME, res_path))
-        exit(0)
+        # exit(0)
+        return False
     # 解压zip
     for and_zip_file in and_res_zip:
         if and_zip_file.split('.')[-1] == 'zip':
@@ -44,6 +46,31 @@ def res_file_path(res_path, up_path):
             # 遍历更新资源文件夹
             and_res_up = os.listdir(os.path.join(res_path, and_file))
             for and_res in and_res_up:
+                # 增量更新文件
+                if and_res == 'resources':
+                    continue
+                else:
+                    if os.path.isdir(os.path.join(res_path, and_file, and_res)):
+                        try:
+                            shutil.copytree(os.path.join(res_path, and_file, and_res),
+                                            os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, and_res))
+                            logging.debug('%s|%s dir update success!' % (LOG_TIME, and_res))
+                        except:
+                            try:
+                                shutil.rmtree(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, and_res))
+                                shutil.copytree(os.path.join(res_path, and_file, and_res),
+                                                os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, and_res))
+                                logging.debug('%s|%s remove dir update success!' % (LOG_TIME, and_res))
+                            except:
+                                logging.debug('%s|%s update file fails ! ' % (LOG_TIME, and_res))
+                    else:
+                        try:
+                            shutil.copyfile(os.path.join(res_path, and_file, and_res),
+                                            os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, and_res))
+                            logging.debug('%s|%s file update success' % (LOG_TIME, and_res))
+                        except:
+                            logging.debug('%s|%s update file fails ! ' % (LOG_TIME, and_res))
+                # zip文件更新
                 if and_res == 'lua':
                     os.mkdir(os.path.join(res_path, and_file, 'lua_bak'))
                     shutil.move(os.path.join(res_path, and_file, and_res),
