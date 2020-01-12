@@ -36,7 +36,7 @@ def res_file_path(res_path, up_path):
     and_res_files = os.listdir(res_path)
     # 压缩
     for and_file in and_res_files:
-        if os.path.isdir(os.path.join(res_path, and_file)) and float(and_file):
+        if os.path.isdir(os.path.join(res_path, and_file)):
             # 创建resources文件夹
             if not os.path.exists(os.path.join(res_path, and_file, 'resources')):
                 os.makedirs(os.path.join(res_path, and_file, 'resources', 'resources'))
@@ -100,8 +100,18 @@ def res_file_path(res_path, up_path):
                 shutil.move(os.path.join(res_path, and_file, 'resources.zip'),
                             os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
 
-                # 修改version文件
-                read_xml(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+                # 修改version文件, 判断该文件夹是否是大厅
+                if float(and_file):
+                    hall_files = os.listdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+                    for i in hall_files:
+                        if str(i).split('.')[-1] == 'xml':
+                            phonename = 'Phone' + i[7:][:-3] + 'zip'
+                            filemd5 = file_md5(
+                                os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, phonename))
+                            xmlpath = os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, i)
+                            read_hall_xml(filemd5, xmlpath)
+                else:
+                    read_game_xml(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
             else:
                 logging.debug('%s|%s is not found, please make dir!' % (
                     LOG_TIME, os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file)))
@@ -109,7 +119,27 @@ def res_file_path(res_path, up_path):
             shutil.rmtree(os.path.join(res_path, and_file))
 
 
-def read_xml(file_path):
+def read_hall_xml(md5str, xmlpath):
+    tree = ET.ElementTree()
+    tree.parse(xmlpath)
+    temp = tree.getroot()
+    luamd5 = file_md5('lua.zip')
+    resmd5 = file_md5('resources.zip')
+    luavesion = int(temp.find('LobbyLuaVersion').text)
+    resvesion = int(temp.find('LobbyResVersion').text)
+    phonevesion = int(temp.find('LobbyPhoneZipVersion').text)
+    if write_xml(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str):
+        write_xml(xmlpath, '<LobbyPhoneZipVersion>' + str(phonevesion),
+                  '<LobbyPhoneZipVersion>' + str(phonevesion + 1))
+    if write_xml(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5):
+        write_xml(xmlpath, '<LobbyLuaVersion>' + str(luavesion),
+                  '<LobbyLuaVersion>' + str(luavesion + 1))
+    if write_xml(xmlpath, str(temp.find('LobbyResMD5').text), resmd5):
+        write_xml(xmlpath, '<LobbyResVersion>' + str(resvesion),
+                  '<LobbyResVersion>' + str(resvesion + 1))
+
+
+def read_game_xml(file_path):
     tree = ET.ElementTree()
     xml_path = os.path.join(file_path, 'version.xml')
     lua_path = os.path.join(file_path, 'lua.zip')
