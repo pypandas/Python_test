@@ -7,7 +7,7 @@ from datetime import datetime
 import xml.etree.ElementTree as ET
 import hashlib
 
-logging.basicConfig(level=logging.DEBUG, format='%(name)s: %(message)s', filename='up_res.log', filemode='a')
+logging.basicConfig(level=logging.DEBUG, format='%(name)s: %(message)s')
 LOG_TIME = str(datetime.now()).split('.')[0]
 
 
@@ -101,7 +101,9 @@ def res_file_path(res_path, up_path):
                             os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
 
                 # 修改version文件, 判断该文件夹是否是大厅
-                if float(and_file):
+                if is_number(and_file):
+                    read_game_xml(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+                else:
                     hall_files = os.listdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
                     for i in hall_files:
                         if str(i).split('.')[-1] == 'xml':
@@ -109,9 +111,8 @@ def res_file_path(res_path, up_path):
                             filemd5 = file_md5(
                                 os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, phonename))
                             xmlpath = os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, i)
-                            read_hall_xml(filemd5, xmlpath)
-                else:
-                    read_game_xml(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+                            read_hall_xml(filemd5, xmlpath,
+                                          os.path.join(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file)))
             else:
                 logging.debug('%s|%s is not found, please make dir!' % (
                     LOG_TIME, os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file)))
@@ -119,24 +120,28 @@ def res_file_path(res_path, up_path):
             shutil.rmtree(os.path.join(res_path, and_file))
 
 
-def read_hall_xml(md5str, xmlpath):
-    tree = ET.ElementTree()
-    tree.parse(xmlpath)
-    temp = tree.getroot()
-    luamd5 = file_md5('lua.zip')
-    resmd5 = file_md5('resources.zip')
-    luavesion = int(temp.find('LobbyLuaVersion').text)
-    resvesion = int(temp.find('LobbyResVersion').text)
-    phonevesion = int(temp.find('LobbyPhoneZipVersion').text)
-    if write_xml(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str):
-        write_xml(xmlpath, '<LobbyPhoneZipVersion>' + str(phonevesion),
-                  '<LobbyPhoneZipVersion>' + str(phonevesion + 1))
-    if write_xml(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5):
-        write_xml(xmlpath, '<LobbyLuaVersion>' + str(luavesion),
-                  '<LobbyLuaVersion>' + str(luavesion + 1))
-    if write_xml(xmlpath, str(temp.find('LobbyResMD5').text), resmd5):
-        write_xml(xmlpath, '<LobbyResVersion>' + str(resvesion),
-                  '<LobbyResVersion>' + str(resvesion + 1))
+def read_hall_xml(md5str, xmlpath, respath):
+    try:
+        tree = ET.ElementTree()
+        tree.parse(xmlpath)
+        temp = tree.getroot()
+        luamd5 = file_md5(os.path.join(respath, 'lua.zip'))
+        resmd5 = file_md5(os.path.join(respath, 'resources.zip'))
+        luavesion = int(temp.find('LobbyLuaVersion').text)
+        resvesion = int(temp.find('LobbyResVersion').text)
+        phonevesion = int(temp.find('LobbyPhoneZipVersion').text)
+        if write_xml(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str):
+            write_xml(xmlpath, '<LobbyPhoneZipVersion>' + str(phonevesion),
+                      '<LobbyPhoneZipVersion>' + str(phonevesion + 1))
+        if write_xml(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5):
+            write_xml(xmlpath, '<LobbyLuaVersion>' + str(luavesion),
+                      '<LobbyLuaVersion>' + str(luavesion + 1))
+        if write_xml(xmlpath, str(temp.find('LobbyResMD5').text), resmd5):
+            write_xml(xmlpath, '<LobbyResVersion>' + str(resvesion),
+                      '<LobbyResVersion>' + str(resvesion + 1))
+        logging.debug('%s|%s hall xml change success' % (LOG_TIME, xmlpath))
+    except:
+        logging.debug('%s|%s hall xml change fails' % (LOG_TIME, xmlpath))
 
 
 def read_game_xml(file_path):
@@ -185,6 +190,23 @@ def file_md5(zip_file):
     content = fp.read()
     fp.close()
     return hashlib.md5(content).hexdigest()
+
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+
+    return False
 
 
 if __name__ == '__main__':
