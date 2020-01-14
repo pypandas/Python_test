@@ -104,45 +104,20 @@ def res_file_path(res_path, up_path):
                             os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
 
                 # 修改version文件, 判断该文件夹是否是大厅
-                if is_number(and_file):
-                    # 新更新方式 新建version_* 文件夹, 将所有资源拷贝至version_* 文件夹中
+                # if is_number(and_file):
+                if and_file.isdecimal():
+                    # 新游戏更新方式 新建version_* 文件夹, 将所有资源拷贝至version_* 文件夹中
                     version_list = find_xml(
                         os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, 'version.xml'))
-                    if version_list is not None:
-                        version = int(version_list[0]) + 1
-                        version_dir = 'version_' + str(version)
-                        if os.path.exists(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir)):
-                            shutil.rmtree(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir))
-                            os.mkdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir))
-                        else:
-                            os.mkdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir))
-                        logging.debug('%s| make new dir %s' % (LOG_TIME, version_dir))
-                        dir_list = os.listdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
-                        for files in dir_list:
-                            if files == 'version.xml':
-                                continue
-                            elif files.split('_')[0] == 'version':
-                                if int(files.split('_')[-1]) < version - 1:
-                                    shutil.rmtree(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, files))
-                                    logging.debug('%s|%s old version delete success' % (LOG_TIME, files))
-                                else:
-                                    continue
-                                continue
-                            else:
-                                if os.path.isdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, files)):
-                                    shutil.copytree(
-                                        os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, files),
-                                        os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir,
-                                                     files))
-                                else:
-                                    shutil.copyfile(
-                                        os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, files),
-                                        os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, version_dir,
-                                                     files))
-                                logging.debug('%s| up new %s success' % (
-                                    LOG_TIME, os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, files)))
+                    new_up_res(version_list, os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+
                     read_game_xml(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
                 else:
+                    # 新大厅更新方式 新建version_* 文件夹, 将所有资源拷贝至version_* 文件夹中
+                    version_list = find_xml(
+                        os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, 'version_1.xml'))
+                    new_up_res(version_list, os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
+
                     hall_files = os.listdir(os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
                     for i in hall_files:
                         if str(i).split('.')[-1] == 'xml':
@@ -150,6 +125,7 @@ def res_file_path(res_path, up_path):
                             filemd5 = file_md5(
                                 os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, phonename))
                             xmlpath = os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file, i)
+
                             read_hall_xml(filemd5, xmlpath,
                                           os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
             else:
@@ -172,13 +148,22 @@ def read_hall_xml(md5str, xmlpath, respath):
         if write_xml(xmlpath, str(temp.find('LobbyPhoneZipMD5').text), md5str):
             write_xml(xmlpath, '<LobbyPhoneZipVersion>' + str(phonevesion),
                       '<LobbyPhoneZipVersion>' + str(phonevesion + 1))
+
         if write_xml(xmlpath, str(temp.find('LobbyLuaMD5').text), luamd5):
             write_xml(xmlpath, '<LobbyLuaVersion>' + str(luavesion),
                       '<LobbyLuaVersion>' + str(luavesion + 1))
+
         if write_xml(xmlpath, str(temp.find('LobbyResMD5').text), resmd5):
             write_xml(xmlpath, '<LobbyResVersion>' + str(resvesion),
                       '<LobbyResVersion>' + str(resvesion + 1))
+
         logging.debug('%s|%s hall xml change success' % (LOG_TIME, xmlpath))
+
+        # 新更新方式修改
+        new_version = int(temp.find('LobbyHallVersion').text)
+        write_xml(xmlpath, '<LobbyHallVersion>' + str(new_version), '<LobbyHallVersion>' + str(new_version + 1))
+        logging.debug('%s|%s new hall version change success' % (LOG_TIME, xmlpath))
+
     except:
         logging.debug('%s|%s hall xml change fails' % (LOG_TIME, xmlpath))
 
@@ -210,7 +195,7 @@ def read_game_xml(file_path):
         # 新更新方式修改
         new_version = int(temp.find('LobbyHallVersion').text)
         write_xml(xml_path, '<LobbyHallVersion>' + str(new_version), '<LobbyHallVersion>' + str(new_version + 1))
-        logging.debug('%s|%s new version change success' % (LOG_TIME, xml_path))
+        logging.debug('%s|%s new game version change success' % (LOG_TIME, xml_path))
     except:
         logging.debug('%s|%s not found or damage!' % (LOG_TIME, xml_path))
 
@@ -259,6 +244,34 @@ def find_xml(path):
             continue
         else:
             return re.findall(r"\d+", line.decode('utf-8'))
+
+
+def new_up_res(version_num, cp_path):
+    if version_num is not None:
+        version = int(version_num[0]) + 1
+        version_dir = 'version_' + str(version)
+        if os.path.exists(os.path.join(cp_path, version_dir)):
+            logging.debug('%s|%s is exists if this dir is games, please delete games dir.' % (LOG_TIME, cp_path))
+        else:
+            os.mkdir(os.path.join(cp_path, version_dir))
+            logging.debug('%s| make new dir %s' % (LOG_TIME, version_dir))
+            dir_list = os.listdir(cp_path)
+            for files in dir_list:
+                if files.split('.')[-1] == 'xml':
+                    continue
+                elif os.path.isdir(os.path.join(cp_path, files)) and files.split('_')[0] == 'version':
+                    if int(files.split('_')[-1]) < version - 2:
+                        shutil.rmtree(os.path.join(cp_path, files))
+                        logging.debug('%s|%s old version delete' % (LOG_TIME, files))
+                    else:
+                        continue
+                    continue
+                else:
+                    if os.path.isdir(os.path.join(cp_path, files)):
+                        shutil.copytree(os.path.join(cp_path, files), os.path.join(cp_path, version_dir, files))
+                    else:
+                        shutil.copyfile(os.path.join(cp_path, files), os.path.join(cp_path, version_dir, files))
+                    logging.debug('%s| up new %s success' % (LOG_TIME, os.path.join(cp_path, files)))
 
 
 if __name__ == '__main__':

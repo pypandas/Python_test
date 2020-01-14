@@ -38,10 +38,17 @@ def find_xml(path):
             return re.findall(r"\d+", line.decode('utf-8'))
 
 
-version = find_xml('../Phone/AssetBundle/Android5.0/10003300/version.xml')
-if version is not None:
-    version = int(version[0]) + 1
-    version = 'version_' + str(version)
-    print(version)
+# version = find_xml('../Phone/AssetBundle/Android5.0/jjhall_217/version_1.xml')
+# if version is not None:
+#     version = int(version[0]) + 1
+#     version = 'version_' + str(version)
+#     print(version)
+# else:
+#     print('not found')
+
+
+name = '12000'
+if name.isdecimal():
+    print('True')
 else:
-    print('not found')
+    print('False')
