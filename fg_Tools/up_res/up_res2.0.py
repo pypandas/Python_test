@@ -104,7 +104,6 @@ def res_file_path(res_path, up_path):
                             os.path.join('../', 'Phone', 'AssetBundle', up_path, and_file))
 
                 # 修改version文件, 判断该文件夹是否是大厅
-                # if is_number(and_file):
                 if and_file.isdecimal():
                     # 新游戏更新方式 新建version_* 文件夹, 将所有资源拷贝至version_* 文件夹中
                     version_list = find_xml(
@@ -220,23 +219,6 @@ def file_md5(zip_file):
     return hashlib.md5(content).hexdigest()
 
 
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        pass
-
-    try:
-        import unicodedata
-        unicodedata.numeric(s)
-        return True
-    except (TypeError, ValueError):
-        pass
-
-    return False
-
-
 def find_xml(path):
     file = open(path, 'rb')
     for line in file.readlines():
@@ -246,6 +228,7 @@ def find_xml(path):
             return re.findall(r"\d+", line.decode('utf-8'))
 
 
+# 新更新
 def new_up_res(version_num, cp_path):
     if version_num is not None:
         version = int(version_num[0]) + 1
